@@ -1,10 +1,26 @@
 import tkinter as tk
 import tkinter.font as tkFont
 from modules import money
-from modules import time
+from modules import clock
 from decimal import *
 
 class Window:
+    def __init__(self, root):
+        self.moneys = money.Money()
+        self.clock = clock.Timer()
+        self.countTime = clock.Time();
+
+        self.pokaz_aktualny_czas=tk.Label(root)
+        self.pokaz_aktualny_czas["bg"] = "#ffffff"
+        self.ft = tkFont.Font(family='Times',size=13)
+        self.pokaz_aktualny_czas["font"] = self.ft
+        self.pokaz_aktualny_czas["fg"] = "#333333"
+        self.pokaz_aktualny_czas["justify"] = "center"
+        self.pokaz_aktualny_czas["text"] = self.clock.getTime()
+        self.pokaz_aktualny_czas.place(x=310,y=60,width=400,height=30)
+        self.pokaz_aktualny_czas.after(1000, self.refreshWindow)
+
+
     def createWindow(self, root):
         root.title("Parkomat")
         width=800
@@ -15,8 +31,7 @@ class Window:
         root.geometry(alignstr)
         root.resizable(width=False, height=False)
 
-        self.moneys = money.Money()
-        #self.clock = time.Time()
+
 
         label_podaj_nr=tk.Label(root)
         ft = tkFont.Font(family='Times',size=13)
@@ -33,15 +48,6 @@ class Window:
         labe_aktualny_czas["justify"] = "center"
         labe_aktualny_czas["text"] = "Aktualny czas: "
         labe_aktualny_czas.place(x=140,y=60,width=100,height=30)
-
-        pokaz_aktualny_czas=tk.Label(root)
-        pokaz_aktualny_czas["bg"] = "#ffffff"
-        ft = tkFont.Font(family='Times',size=13)
-        pokaz_aktualny_czas["font"] = ft
-        pokaz_aktualny_czas["fg"] = "#333333"
-        pokaz_aktualny_czas["justify"] = "center"
-        pokaz_aktualny_czas["text"] = "AKTUALNY_CZAS"
-        pokaz_aktualny_czas.place(x=310,y=60,width=400,height=30)
 
         label_podaj_czas=tk.Label(root)
         ft = tkFont.Font(family='Times',size=13)
@@ -118,8 +124,9 @@ class Window:
         wprowadz_nr_rej["font"] = ft
         wprowadz_nr_rej["fg"] = "#333333"
         wprowadz_nr_rej["justify"] = "center"
-        wprowadz_nr_rej["text"] = "wprowadz_nr_rej"
+        wprowadz_nr_rej["text"] = "wprowadz_nr_frej"
         wprowadz_nr_rej.place(x=310,y=20,width=400,height=30)
+        #wprowadz_nr_rej["command"] = self.wprowadz_nr_rej_command
 
         bZatwierdz=tk.Button(root)
         bZatwierdz["bg"] = "#13f122"
@@ -131,13 +138,13 @@ class Window:
         bZatwierdz.place(x=320,y=370,width=160,height=40)
         bZatwierdz["command"] = self.bZatwierdz_command
 
-        label_dodaj_kwote=tk.Label(root)
-        ft = tkFont.Font(family='Times',size=13)
-        label_dodaj_kwote["font"] = ft
-        label_dodaj_kwote["fg"] = "#333333"
-        label_dodaj_kwote["justify"] = "center"
-        label_dodaj_kwote["text"] = "Dodaj kwote:"
-        label_dodaj_kwote.place(x=200,y=250,width=400,height=25)
+        self.label_dodaj_kwote=tk.Label(root)
+        self.ft = tkFont.Font(family='Times',size=13)
+        self.label_dodaj_kwote["font"] = self.ft
+        self.label_dodaj_kwote["fg"] = "#333333"
+        self.label_dodaj_kwote["justify"] = "center"
+        self.label_dodaj_kwote["text"] = "Dodaj kwote:"
+        self.label_dodaj_kwote.place(x=200,y=250,width=400,height=25)
 
         okno_terminal=tk.Label(root)
         okno_terminal["bg"] = "#ffffff"
@@ -215,7 +222,7 @@ class Window:
         self.pokaz_kwote["fg"] = "#333333"
         self.pokaz_kwote["justify"] = "center"
         self.pokaz_kwote["text"] = "0 PLN"
-        self.pokaz_kwote.place(x=300,y=330,width=200,height=30)
+        self.pokaz_kwote.place(x=200,y=330,width=400,height=30)
 
         b15m=tk.Button(root)
         b15m["bg"] = "#fcc280"
@@ -285,23 +292,23 @@ class Window:
         label_data_wyjazdu["text"] = "Data wyjazdu z parkingu:"
         label_data_wyjazdu.place(x=0,y=190,width=274,height=48)
 
-        pokaz_data_wyjazdu=tk.Label(root)
-        pokaz_data_wyjazdu["bg"] = "#ffffff"
-        ft = tkFont.Font(family='Times',size=10)
-        pokaz_data_wyjazdu["font"] = ft
-        pokaz_data_wyjazdu["fg"] = "#333333"
-        pokaz_data_wyjazdu["justify"] = "center"
-        pokaz_data_wyjazdu["text"] = "data_wyj_zpark"
-        pokaz_data_wyjazdu.place(x=310,y=200,width=400,height=30)
+        self.pokaz_data_wyjazdu=tk.Label(root)
+        self.pokaz_data_wyjazdu["bg"] = "#ffffff"
+        self.ft = tkFont.Font(family='Times',size=13)
+        self.pokaz_data_wyjazdu["font"] = ft
+        self.pokaz_data_wyjazdu["fg"] = "#333333"
+        self.pokaz_data_wyjazdu["justify"] = "center"
+        self.pokaz_data_wyjazdu["text"] = "Brak"
+        self.pokaz_data_wyjazdu.place(x=310,y=200,width=400,height=30)
 
-        pokaz_data_rozpoczecia=tk.Label(root)
-        pokaz_data_rozpoczecia["bg"] = "#ffffff"
-        ft = tkFont.Font(family='Times',size=13)
-        pokaz_data_rozpoczecia["font"] = ft
-        pokaz_data_rozpoczecia["fg"] = "#333333"
-        pokaz_data_rozpoczecia["justify"] = "center"
-        pokaz_data_rozpoczecia["text"] = "data_aktualizowalna"
-        pokaz_data_rozpoczecia.place(x=310,y=100,width=400,height=30)
+        self.pokaz_data_rozpoczecia=tk.Label(root)
+        self.pokaz_data_rozpoczecia["bg"] = "#ffffff"
+        self.ft = tkFont.Font(family='Times',size=13)
+        self.pokaz_data_rozpoczecia["font"] = self.ft
+        self.pokaz_data_rozpoczecia["fg"] = "#333333"
+        self.pokaz_data_rozpoczecia["justify"] = "center"
+        self.pokaz_data_rozpoczecia["text"] = self.countTime.getTime()[0]
+        self.pokaz_data_rozpoczecia.place(x=310,y=100,width=400,height=30)
 
     def b5gr_command(self):
         self.moneys.addMoney(Decimal(0.05))
@@ -336,6 +343,7 @@ class Window:
 
 
     def bZatwierdz_command(self):
+
         print("command")
 
 
@@ -370,35 +378,60 @@ class Window:
 
 
     def b15m_command(self):
-        print("command")
+        self.countTime.addTime(60*15)
+        self.updateTime()
 
 
     def b1h_command(self):
-        print("command")
+        self.countTime.addTime(60 * 60)
+        self.updateTime()
 
 
     def b2h_command(self):
-        print("command")
+        self.countTime.addTime(60 * 60 * 2)
+        self.updateTime()
 
 
     def b5h_command(self):
-        print("command")
+        self.countTime.addTime(60 * 60 *5)
+        self.updateTime()
 
 
     def b10h_command(self):
-        print("command")
+        self.countTime.addTime(60 * 60 *10)
+        self.updateTime()
 
 
     def b24h_command(self):
-        print("command")
+        self.countTime.addTime(60 * 60 * 24)
+        self.updateTime()
+
+    def wprowadz_nr_rej_command(self):
+        print("k")
+
 
     def updateValue(self):
         max_coins,money_sum = self.moneys.getMoney()
-        print(max_coins)
         if max_coins < 200:
             self.pokaz_kwote["text"] = str(money_sum)+" PLN"
+            if max_coins > 200:
+                self.label_dodaj_kwote["text"] = "Od teraz możesz dodawać jedynie banknoty"
         else:
-            self.pokaz_kwote["text"] = str(money_sum) + " PLN - Max. monet!"
+            self.pokaz_kwote["text"] = str(money_sum) + " PLN"
+            self.label_dodaj_kwote["text"] = "Osiągnięto maksymalną ilośc monet. Włóż inny nominał."
+
     def getMoney(self):
         max_coins, money_sum = self.moneys.getMoney()
         return money_sum
+
+    def updateTime(self):
+        self.pokaz_data_rozpoczecia["text"] = self.countTime.getTime()[0]
+
+
+    def refreshWindow(self):
+
+        self.pokaz_aktualny_czas["text"] = self.clock.getTime()
+        self.pokaz_aktualny_czas.after(1000, self.refreshWindow)
+
+
+
