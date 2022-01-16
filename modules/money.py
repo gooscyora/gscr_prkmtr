@@ -10,7 +10,7 @@ class Money:
     def addMoney(self, money):
         if round(money, 2) != 10 and round(money, 2) != 20 and round(money, 2) != 50 and self.max_coins < 200:
             self.money_sum = Decimal(round(money, 2) + self.money_sum)
-            self.max_coins += 25
+            self.max_coins += 1
         elif round(money, 2) == 10 or round(money, 2) == 20 or round(money, 2) == 50:
             self.money_sum = Decimal(round(money, 2) + self.money_sum)
 

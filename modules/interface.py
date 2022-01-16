@@ -3,6 +3,7 @@ import tkinter.font as tkFont
 from modules import money
 from modules import clock
 from decimal import *
+import re
 
 class Window:
     def __init__(self, root):
@@ -117,15 +118,15 @@ class Window:
         b1zl.place(x=410,y=290,width=30,height=25)
         b1zl["command"] = self.b1zl_command
 
-        wprowadz_nr_rej=tk.Entry(root)
-        wprowadz_nr_rej["bg"] = "#ffffff"
-        wprowadz_nr_rej["borderwidth"] = "1px"
-        ft = tkFont.Font(family='Times',size=13)
-        wprowadz_nr_rej["font"] = ft
-        wprowadz_nr_rej["fg"] = "#333333"
-        wprowadz_nr_rej["justify"] = "center"
-        wprowadz_nr_rej["text"] = "wprowadz_nr_frej"
-        wprowadz_nr_rej.place(x=310,y=20,width=400,height=30)
+        self.wprowadz_nr_rej=tk.Entry(root)
+        self.wprowadz_nr_rej["bg"] = "#ffffff"
+        self.wprowadz_nr_rej["borderwidth"] = "1px"
+        self.ft = tkFont.Font(family='Times',size=13)
+        self.wprowadz_nr_rej["font"] = self.ft
+        self.wprowadz_nr_rej["fg"] = "#333333"
+        self.wprowadz_nr_rej["justify"] = "center"
+        self.wprowadz_nr_rej["text"] = "wprowadz_nr_frej"
+        self.wprowadz_nr_rej.place(x=310,y=20,width=400,height=30)
         #wprowadz_nr_rej["command"] = self.wprowadz_nr_rej_command
 
         bZatwierdz=tk.Button(root)
@@ -143,17 +144,17 @@ class Window:
         self.label_dodaj_kwote["font"] = self.ft
         self.label_dodaj_kwote["fg"] = "#333333"
         self.label_dodaj_kwote["justify"] = "center"
-        self.label_dodaj_kwote["text"] = "Dodaj kwote:"
-        self.label_dodaj_kwote.place(x=200,y=250,width=400,height=25)
+        self.label_dodaj_kwote["text"] = "Dodaj kwote. Wprowadź ilość dodawanych monet:"
+        self.label_dodaj_kwote.place(x=150,y=250,width=400,height=25)
 
-        okno_terminal=tk.Label(root)
-        okno_terminal["bg"] = "#ffffff"
-        ft = tkFont.Font(family='Times',size=10)
-        okno_terminal["font"] = ft
-        okno_terminal["fg"] = "#333333"
-        okno_terminal["justify"] = "center"
-        okno_terminal["text"] = "_terminal"
-        okno_terminal.place(x=20,y=420,width=760,height=260)
+        self.okno_terminal=tk.Label(root)
+        self.okno_terminal["bg"] = "#ffffff"
+        self.ft = tkFont.Font(family='Times',size=10)
+        self.okno_terminal["font"] = ft
+        self.okno_terminal["fg"] = "#333333"
+        self.okno_terminal["justify"] = "center"
+        self.okno_terminal["text"] = "Wyświetlacz"
+        self.okno_terminal.place(x=20,y=420,width=760,height=260)
 
         b2gr=tk.Button(root)
         b2gr["bg"] = "#bcdfee"
@@ -310,97 +311,121 @@ class Window:
         self.pokaz_data_rozpoczecia["text"] = self.countTime.getTime()[0]
         self.pokaz_data_rozpoczecia.place(x=310,y=100,width=400,height=30)
 
+        self.wprowadz_ilosc_monet=tk.Entry(root)
+        self.wprowadz_ilosc_monet["borderwidth"] = "1px"
+        self.ft = tkFont.Font(family='Times',size=13)
+        self.wprowadz_ilosc_monet["font"] = ft
+        self.wprowadz_ilosc_monet["fg"] = "#333333"
+        self.wprowadz_ilosc_monet["justify"] = "center"
+        self.wprowadz_ilosc_monet.insert(0,1)
+        self.wprowadz_ilosc_monet.place(x=560,y=250,width=70,height=30)
+
+    def coinCount(self):
+        try:
+            coin_count=Decimal(self.wprowadz_ilosc_monet.get())
+            if coin_count>0:
+                print(self.wprowadz_ilosc_monet.get())
+                return coin_count
+            else:
+                self.okno_terminal["text"] = "Wprowadzona ilosc monet nie jest > 0."
+                return 0
+        except InvalidOperation:
+            self.okno_terminal["text"] = "Nie wykryto liczby, wpisz ilość monet jeszcze raz"
+            print("?")
+            return 0
+
+
+
+    def calculateFinishTimeHelper(self):
+        self.pokaz_data_wyjazdu["text"]=self.countTime.calculateFinishTime(Decimal(self.getMoney()) * Decimal(100))
+
     def b5gr_command(self):
-        self.moneys.addMoney(Decimal(0.05))
+
+        self.moneys.addMoney(Decimal(0.05)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
 
 
     def b10gr_command(self):
-        self.moneys.addMoney(Decimal(0.1))
+        self.moneys.addMoney(Decimal(0.1)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
 
 
     def b20gr_command(self):
-        self.moneys.addMoney(Decimal(0.2))
+        self.moneys.addMoney(Decimal(0.2)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
 
 
 
     def b50gr_command(self):
-        self.moneys.addMoney(Decimal(0.5))
+        self.moneys.addMoney(Decimal(0.5)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
 
 
 
     def b2zl_command(self):
-        self.moneys.addMoney(Decimal(2))
+        self.moneys.addMoney(Decimal(2)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
 
 
     def b1zl_command(self):
-        self.moneys.addMoney(Decimal(1))
+        self.moneys.addMoney(Decimal(1)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
-
-
-    def bZatwierdz_command(self):
-
-        print("command")
-
 
     def b2gr_command(self):
-        self.moneys.addMoney(Decimal(0.02))
+        self.moneys.addMoney(Decimal(0.02)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
-
 
     def b1gr_command(self):
-        self.moneys.addMoney(Decimal(0.01))
+        self.moneys.addMoney(Decimal(0.01)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
-
 
     def b5zl_command(self):
-        self.moneys.addMoney(Decimal(5))
+        self.moneys.addMoney(Decimal(5)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
-
 
     def b10zl_command(self):
-        self.moneys.addMoney(Decimal(10))
+        self.moneys.addMoney(Decimal(10)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
-
 
     def b20zl_command(self):
-        self.moneys.addMoney(Decimal(20))
+        self.moneys.addMoney(Decimal(20)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
-
 
     def b50zl_command(self):
-        self.moneys.addMoney(Decimal(50))
+        self.moneys.addMoney(Decimal(50)*Decimal(self.coinCount()))
+        self.calculateFinishTimeHelper()
         self.updateValue()
-
 
     def b15m_command(self):
         self.countTime.addTime(60*15)
         self.updateTime()
 
-
     def b1h_command(self):
         self.countTime.addTime(60 * 60)
         self.updateTime()
-
 
     def b2h_command(self):
         self.countTime.addTime(60 * 60 * 2)
         self.updateTime()
 
-
     def b5h_command(self):
         self.countTime.addTime(60 * 60 *5)
         self.updateTime()
 
-
     def b10h_command(self):
         self.countTime.addTime(60 * 60 *10)
         self.updateTime()
-
 
     def b24h_command(self):
         self.countTime.addTime(60 * 60 * 24)
@@ -408,6 +433,17 @@ class Window:
 
     def wprowadz_nr_rej_command(self):
         print("k")
+
+    def bZatwierdz_command(self):
+        nr_rej=str(self.wprowadz_nr_rej.get()).replace(" ", "")
+        if not re.match('[A-Z]{3}\d{5}',nr_rej):
+            self.okno_terminal["text"] = "Wprowadzono niepoprawny numer rejestracyjny."
+        elif not Decimal(self.getMoney()) > 0:
+            self.okno_terminal["text"] = "Nie wrzucono pieniędzy."
+        elif self.countTime.calculateFinishTime(Decimal(self.getMoney()) * Decimal(100))==self.countTime.getTime()[0]:
+            self.okno_terminal["text"] = "Data rozpoczęcia równa się dacie zakończenia - wrzuć więcej pieniędzy."
+        else:
+            self.okno_terminal["text"] = "Potwierdzenie oplacenia parkingu\nNumer rejestracyjny: "+nr_rej+"\n Czas zakupu: "+str(self.clock.getTime())+"\nTermin wyjazdu: "+str(self.countTime.calculateFinishTime(Decimal(self.getMoney()) * Decimal(100)))
 
 
     def updateValue(self):
@@ -426,12 +462,10 @@ class Window:
 
     def updateTime(self):
         self.pokaz_data_rozpoczecia["text"] = self.countTime.getTime()[0]
+        self.calculateFinishTimeHelper()
 
 
     def refreshWindow(self):
 
         self.pokaz_aktualny_czas["text"] = self.clock.getTime()
         self.pokaz_aktualny_czas.after(1000, self.refreshWindow)
-
-
-
