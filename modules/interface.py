@@ -339,69 +339,69 @@ class Window:
 
     def b5gr_command(self):
 
-        self.moneys.addMoney(Decimal(0.05)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(0.05),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
 
 
     def b10gr_command(self):
-        self.moneys.addMoney(Decimal(0.1)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(0.1),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
 
 
     def b20gr_command(self):
-        self.moneys.addMoney(Decimal(0.2)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(0.2),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
 
 
 
     def b50gr_command(self):
-        self.moneys.addMoney(Decimal(0.5)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(0.5),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
 
 
 
     def b2zl_command(self):
-        self.moneys.addMoney(Decimal(2)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(2),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
 
 
     def b1zl_command(self):
-        self.moneys.addMoney(Decimal(1)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(1),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
 
     def b2gr_command(self):
-        self.moneys.addMoney(Decimal(0.02)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(0.02),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
 
     def b1gr_command(self):
-        self.moneys.addMoney(Decimal(0.01)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(0.01),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
 
     def b5zl_command(self):
-        self.moneys.addMoney(Decimal(5)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(5),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
 
     def b10zl_command(self):
-        self.moneys.addMoney(Decimal(10)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(10),1)
         self.calculateFinishTimeHelper()
         self.updateValue()
 
     def b20zl_command(self):
-        self.moneys.addMoney(Decimal(20)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(20),1)
         self.calculateFinishTimeHelper()
         self.updateValue()
 
     def b50zl_command(self):
-        self.moneys.addMoney(Decimal(50)*Decimal(self.coinCount()))
+        self.moneys.addMoney(Decimal(50),1)
         self.calculateFinishTimeHelper()
         self.updateValue()
 
