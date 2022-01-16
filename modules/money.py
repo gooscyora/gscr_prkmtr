@@ -17,10 +17,3 @@ class Money:
 
     def getMoney(self):
         return self.max_coins, Decimal(self.money_sum)
-
-
-
-
-
-class Dispenser:
-    i=0

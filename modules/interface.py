@@ -324,14 +324,12 @@ class Window:
         try:
             coin_count=Decimal(self.wprowadz_ilosc_monet.get())
             if coin_count>0:
-                print(self.wprowadz_ilosc_monet.get())
                 return coin_count
             else:
                 self.okno_terminal["text"] = "Wprowadzona ilosc monet nie jest > 0."
                 return 0
         except InvalidOperation:
             self.okno_terminal["text"] = "Nie wykryto liczby, wpisz ilość monet jeszcze raz"
-            print("?")
             return 0
 
 
@@ -432,7 +430,7 @@ class Window:
         self.updateTime()
 
     def wprowadz_nr_rej_command(self):
-        print("k")
+        print("Nr rej.")
 
     def bZatwierdz_command(self):
         nr_rej=str(self.wprowadz_nr_rej.get()).replace(" ", "")
