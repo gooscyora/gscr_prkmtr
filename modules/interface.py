@@ -32,8 +32,6 @@ class Window:
         root.geometry(alignstr)
         root.resizable(width=False, height=False)
 
-
-
         label_podaj_nr=tk.Label(root)
         ft = tkFont.Font(family='Times',size=13)
         label_podaj_nr["font"] = ft
@@ -127,7 +125,6 @@ class Window:
         self.wprowadz_nr_rej["justify"] = "center"
         self.wprowadz_nr_rej["text"] = "wprowadz_nr_frej"
         self.wprowadz_nr_rej.place(x=310,y=20,width=400,height=30)
-        #wprowadz_nr_rej["command"] = self.wprowadz_nr_rej_command
 
         bZatwierdz=tk.Button(root)
         bZatwierdz["bg"] = "#13f122"
@@ -332,8 +329,6 @@ class Window:
             self.okno_terminal["text"] = "Nie wykryto liczby, wpisz ilość monet jeszcze raz"
             return 0
 
-
-
     def calculateFinishTimeHelper(self):
         self.pokaz_data_wyjazdu["text"]=self.countTime.calculateFinishTime(Decimal(self.getMoney()) * Decimal(100))
 
@@ -343,32 +338,25 @@ class Window:
         self.calculateFinishTimeHelper()
         self.updateValue()
 
-
     def b10gr_command(self):
         self.moneys.addMoney(Decimal(0.1),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
-
 
     def b20gr_command(self):
         self.moneys.addMoney(Decimal(0.2),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
 
-
-
     def b50gr_command(self):
         self.moneys.addMoney(Decimal(0.5),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
 
-
-
     def b2zl_command(self):
         self.moneys.addMoney(Decimal(2),Decimal(self.coinCount()))
         self.calculateFinishTimeHelper()
         self.updateValue()
-
 
     def b1zl_command(self):
         self.moneys.addMoney(Decimal(1),Decimal(self.coinCount()))
@@ -434,7 +422,7 @@ class Window:
 
     def bZatwierdz_command(self):
         nr_rej=str(self.wprowadz_nr_rej.get()).replace(" ", "")
-        if not re.match('[A-Z]{3}\d{5}',nr_rej):
+        if not re.match('^[A-Z]{1}[A-Z\d]{1,2}[A-Z\d]{2,5}$',nr_rej):
             self.okno_terminal["text"] = "Wprowadzono niepoprawny numer rejestracyjny."
         elif not Decimal(self.getMoney()) > 0:
             self.okno_terminal["text"] = "Nie wrzucono pieniędzy."
@@ -442,7 +430,6 @@ class Window:
             self.okno_terminal["text"] = "Data rozpoczęcia równa się dacie zakończenia - wrzuć więcej pieniędzy."
         else:
             self.okno_terminal["text"] = "Potwierdzenie oplacenia parkingu\nNumer rejestracyjny: "+nr_rej+"\n Czas zakupu: "+str(self.clock.getTime())+"\nTermin wyjazdu: "+str(self.countTime.calculateFinishTime(Decimal(self.getMoney()) * Decimal(100)))
-
 
     def updateValue(self):
         max_coins,money_sum = self.moneys.getMoney()
@@ -461,7 +448,6 @@ class Window:
     def updateTime(self):
         self.pokaz_data_rozpoczecia["text"] = self.countTime.getTime()[0]
         self.calculateFinishTimeHelper()
-
 
     def refreshWindow(self):
 

@@ -1,5 +1,3 @@
-import tkinter as tk
-import tkinter.font as tkFont
 from decimal import *
 
 class Money:
@@ -15,7 +13,6 @@ class Money:
                 self.money_sum -= Decimal((round(self.max_coins-200,2)))*Decimal(round(money,2))
         elif round(money, 2) == 10 or round(money, 2) == 20 or round(money, 2) == 50:
             self.money_sum = Decimal(round(money, 2)*Decimal(coinCount) + self.money_sum)
-
 
     def getMoney(self):
         return self.max_coins, Decimal(self.money_sum)
